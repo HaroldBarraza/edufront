@@ -15,16 +15,7 @@ import type {
   EstadoGrupo,
 } from '../../types/academinco.types';
 
-const schema = z.object({
-  materia_id: z.number().int().positive('Selecciona materia'),
-  periodo_id: z.number().int().positive('Selecciona periodo'),
-  docente_id: z.number().int().positive('Selecciona docente'),
-  codigo: z.string().min(1, 'Requerido').max(10),
-  cupo_maximo: z.number().int().positive('Debe ser positivo'),
-  estado: z.enum(['ABIERTO', 'CANCELADO', 'CERRADO']).optional(),
-});
-type FormData = z.infer<typeof schema>;
-
+import { grupoSchema as schema, type GrupoForm as FormData } from '../../schema';
 function mensajeError(err: unknown, fallback: string): string {
   if (axios.isAxiosError(err)) {
     const raw = err.response?.data?.message;

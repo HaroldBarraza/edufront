@@ -8,19 +8,7 @@ import { AsginacionesService } from "../../service/asignaciones.service";
 import { grupoService } from "../../service/grupo.service";
 import { useAuthStore } from "../../stores/useAuthstore";
 import { Grupo } from "../../types/academinco.types";
-
-const schema = z.object({
-  grupo_id: z.number().int().positive("Selecciona un grupo"),
-  titulo: z.string().min(3, "Mínimo 3 caracteres").max(150),
-  instrucciones: z.string().min(1, "Requerido"),
-  fecha_limite: z
-    .string()
-    .min(1, "Fecha requerida")
-    .refine((v) => new Date(v).getTime() > Date.now(), {
-      message: "La fecha límite debe ser futura",
-    }),
-});
-type FormData = z.infer<typeof schema>;
+import { nuevaAsignacionSchema as schema, type NuevaAsignacionForm as FormData } from '../../schema';
 
 function mensajeError(err: unknown, fallback: string): string {
   if (axios.isAxiosError(err)) {

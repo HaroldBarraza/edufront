@@ -1,35 +1,12 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { ArrowLeft, CheckCircle2, GraduationCap } from 'lucide-react';
 import { authService } from '../../service/auth.service';
-
-
-const registroSchema = z.object({
-  email: z.email('Email inválido'),
-  password: z.string().min(6, 'Mínimo 6 caracteres'),
-  nombre: z
-    .string()
-    .min(3, 'Mínimo 3 caracteres')
-    .regex(/^[a-zA-Z áéíóúÁÉÍÓÚñÑ\s]+$/, 'Solo letras y espacios'),
-  appaterno: z
-    .string()
-    .min(3, 'Mínimo 3 caracteres')
-    .regex(/^[a-zA-Z áéíóúÁÉÍÓÚñÑ\s]+$/, 'Solo letras y espacios'),
-  apmaterno: z
-    .string()
-    .min(3, 'Mínimo 3 caracteres')
-    .regex(/^[a-zA-Z áéíóúÁÉÍÓÚñÑ\s]+$/, 'Solo letras y espacios'),
-  telefono: z
-    .string()
-    .min(6, 'Mínimo 6 caracteres')
-    .regex(/^[+\-\d]+$/, 'Solo dígitos, + y -'),
-});
-type RegistroForm = z.infer<typeof registroSchema>;
+import { registroSchema, type RegistroForm } from '../../schema/auth.schema';
 
 const CAMPOS: Array<{
   name: keyof RegistroForm;

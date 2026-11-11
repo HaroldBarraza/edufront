@@ -1,16 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuthStore, CuentaNoHabilidtadaError } from '../../stores/useAuthstore';
 import { Logo } from '../../components/layout/Logo';
 
-const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Mínimo 6 caracteres'),
-});
-type LoginForm = z.infer<typeof loginSchema>;
+import { loginSchema, type LoginForm } from '../../schema/auth.schema';
 
 const MENSAJE_ESTADO: Record<string, string> = {
   PENDIENTE_APROBACION: 'Tu cuenta aún no está aprobada. Recepción debe verificar tu pago de matrícula.',

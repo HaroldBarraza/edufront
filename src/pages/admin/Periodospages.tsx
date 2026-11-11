@@ -5,14 +5,7 @@ import { z } from "zod";
 import axios from "axios";
 import { periodoService } from "../../service/periodo.service";
 import type { Periodo, EstadoPeriodo } from "../../types/academinco.types";
-
-const schema = z.object({
-  year: z
-    .number()
-    .int()
-    .min(new Date().getFullYear(), "No puede ser un año anterior"),
-});
-type FormData = z.infer<typeof schema>;
+import { periodoSchema as schema, type PeriodoForm as FormData } from '../../schema';
 
 export function PeriodoPage() {
   const [periodo, setPeriodo] = useState<Periodo[]>([]);

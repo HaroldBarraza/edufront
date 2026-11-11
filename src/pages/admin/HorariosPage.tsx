@@ -6,25 +6,8 @@ import axios from 'axios';
 import { horarioService } from '../../service/horario.service';
 import { grupoService } from '../../service/grupo.service';
 import type { Grupo, HorarioGrupo, Dia } from '../../types/academinco.types';
-
+import { horarioSchema as schema, type HorarioForm as FormData } from '../../schema';
 const DIAS: Dia[] = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES'];
-
-const schema = z
-  .object({
-    grupo_id: z.number().int().positive('Selecciona grupo'),
-    dia_semana: z.enum(['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES']),
-    hora_inicio: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Formato HH:mm'),
-    hora_fin: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Formato HH:mm'),
-  })
-  .refine((d) => d.hora_fin > d.hora_inicio, {
-    message: 'Hora fin debe ser posterior a hora inicio',
-    path: ['hora_fin'],
-  });
-type FormData = z.infer<typeof schema>;
 
 function mensajeError(err: unknown, fallback: string): string {
   if (axios.isAxiosError(err)) {

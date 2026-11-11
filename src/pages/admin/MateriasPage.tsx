@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import axios from "axios";
 import { materiaService } from "../../service/materia.service";
 import type { Materia } from "../../types/academinco.types";
-
-const schema = z.object({
-  nombre: z.string().min(1, "Requerido").max(100),
-  creditos: z.number().int().positive("Debe ser positivo"),
-  costo_inscripcion: z.number().min(0, "No puede ser negativo"),
-  costo_mensualidad: z.number().min(0, "No puede ser negativo"),
-});
-type FormData = z.infer<typeof schema>;
+import { materiaSchema as schema, type MateriaForm as FormData } from '../../schema/academico.schema';
 
 function mensajeError(err: unknown, fallback: string): string {
   if (axios.isAxiosError(err)) {
